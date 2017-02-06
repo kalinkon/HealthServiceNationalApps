@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#A5A6C8</color>
+    <color name="colorPrimaryDark">#A5A6C8</color>
+    <color name="colorAccent">#835F8C</color>
+
+    <color name="colorMenu">#7678B3</color>
+    <color name="colorPrimaryDarkMenu">#7678B3</color>
+
+
+    <color name="colorPrimaryDiseaseList">#9875B2</color>
+    <color name="colorPrimaryDarkDiseaseList">#9875B2</color>
+
+    <color name="colorPrimaryContent">#747171</color>
+    <color name="colorPrimaryDarkContent">#3e2626</color>
+</resources>
