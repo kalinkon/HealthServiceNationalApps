@@ -9,7 +9,7 @@
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
     android:background="@drawable/diseases_list_background"
-    tools:context="com.mcc.healthservicefinal.activity.HospitalListActivity">
+    tools:context=".activity.MainMenuActivity">
 
     <ListView
         android:id="@+id/lvContent"

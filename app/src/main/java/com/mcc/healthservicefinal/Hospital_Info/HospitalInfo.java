@@ -31,7 +31,10 @@ public class HospitalInfo {
             String [] str = arrHospitalInfo[index].split(" ");
             StringBuilder builder = new StringBuilder();
 
-            for (int nestedIndex =1; nestedIndex < str.length; nestedIndex++){
+            int CurrentIndex=0;
+            if(index>0)CurrentIndex=1;
+
+            for (int nestedIndex =CurrentIndex; nestedIndex < str.length; nestedIndex++){
                 builder.append(str[nestedIndex]);
                 builder.append(" ");
             }

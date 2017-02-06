@@ -8,6 +8,8 @@
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
 
+
+
     <TextView
         android:id="@+id/tvHospitalName"
         android:paddingBottom="20dp"
@@ -15,6 +17,7 @@
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_below="@+id/tvHospitalName"
@@ -27,7 +30,7 @@
             android:id="@+id/lladdress"
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imAddress"
@@ -39,8 +42,9 @@
                 android:id="@+id/tvAddress"
                 android:textSize="15dp"
                 android:clickable="true"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
         </TableRow>
 
         <TableRow
@@ -60,11 +64,14 @@
                 android:id="@+id/tvContact"
                 android:textSize="15dp"
                 android:clickable="true"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent" />
         </TableRow>
 
     </TableLayout>
+
+
 
 
 

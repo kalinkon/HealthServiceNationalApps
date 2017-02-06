@@ -1,16 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:weightSum="1">
 
-   <TextView
-       android:id="@+id/tvContent"
-       android:paddingTop="5dp"
-       android:paddingBottom="15dp"
-       android:layout_marginTop="10dp"
-       android:layout_marginBottom="10dp"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:textStyle="normal|bold"
-       android:textSize="17sp" />
-</RelativeLayout>
+<TextView
+    android:text="TextView"
+    android:paddingTop="5dp"
+    android:paddingBottom="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/tvtext"
+    android:layout_weight="0.19"
+    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+    android:textColor="@color/colorAccent"
+    android:textSize="17sp"
+    android:textStyle="bold"
+     />
+
+</LinearLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:orientation="vertical" android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tvContent"-->
+    <!--android:paddingTop="5dp"-->
+    <!--android:paddingBottom="15dp"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textStyle="normal|bold"-->
+    <!--android:textSize="17sp" />-->
+    <!--</RelativeLayout>-->
+    <!---->

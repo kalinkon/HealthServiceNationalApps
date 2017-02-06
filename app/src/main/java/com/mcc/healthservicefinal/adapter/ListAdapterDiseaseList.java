@@ -39,13 +39,31 @@ public class ListAdapterDiseaseList extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
+        MyHolder holder;
         View row= convertView;
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if(row==null){
             row =inflater.inflate(R.layout.text_sub_menu,null);
-            TextView textView = (TextView)row.findViewById(R.id.tvtext);
-            textView.setText(subMenus.get(position).getSubMenuName());
+            holder=new MyHolder(row);
+            row.setTag(holder);
         }
+        else{
+            holder=(MyHolder)row.getTag();
+        }
+
+        holder.keyword.setText(subMenus.get(position).getSubMenuName());
         return row;
     }
+
+    public class MyHolder {
+        TextView keyword;
+
+        public MyHolder(View v) {
+            keyword = (TextView) v.findViewById(R.id.tvtext);
+        }
+
+    }
 }
+
+
+
