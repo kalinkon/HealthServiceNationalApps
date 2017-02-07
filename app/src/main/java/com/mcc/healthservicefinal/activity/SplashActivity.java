@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
                     {
 
                         // Wait given period of time or exit on touch
-                        wait(3000);
+                        wait(1500);
                     }
                 }
                 catch(InterruptedException ex)

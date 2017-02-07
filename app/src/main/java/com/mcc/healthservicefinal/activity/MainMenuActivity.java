@@ -36,19 +36,22 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        networkConnection = new NetworkConnection(this);
-        doOperations();
+
+
+
     }
     @Override
     protected void onStart() {
         super.onStart();
+        networkConnection = new NetworkConnection(this);
         connectionInformation();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        doOperations();
+
     }
 
     private void doOperations() {
@@ -60,8 +63,11 @@ public class MainMenuActivity extends AppCompatActivity {
 
     }
     private void connectionInformation() {
-        if (!networkConnection.isTurnedOn())
+        if (!networkConnection.isTurnedOn()) {
             turnOnDataOrWifi();
+        }else{
+            doOperations();
+        }
     }
     private void turnOnDataOrWifi() {
         networkConnection.accessNetworkSettings(MainMenuActivity.this);

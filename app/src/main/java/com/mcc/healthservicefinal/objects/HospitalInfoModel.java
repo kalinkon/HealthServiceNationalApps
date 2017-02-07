@@ -1,10 +1,12 @@
 package com.mcc.healthservicefinal.objects;
 
+import java.io.Serializable;
+
 /**
  * Created by nitul on 1/30/17.
  */
 
-public class HospitalInfoModel {
+public class HospitalInfoModel implements Serializable {
 
     private String rehabName;
     private String rehabAdderss;

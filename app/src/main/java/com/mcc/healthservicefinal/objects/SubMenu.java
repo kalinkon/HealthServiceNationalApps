@@ -1,10 +1,12 @@
 package com.mcc.healthservicefinal.objects;
 
+import java.io.Serializable;
+
 /**
  * Created by LINKON on 1/26/2017.
  */
 
-public class SubMenu {
+public class SubMenu implements Serializable {
     private String menuId;
     private String subMenuId;
     private String subMenuName;

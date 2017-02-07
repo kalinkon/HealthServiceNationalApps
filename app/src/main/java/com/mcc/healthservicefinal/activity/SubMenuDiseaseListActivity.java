@@ -1,10 +1,16 @@
 package com.mcc.healthservicefinal.activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,9 +29,11 @@ import java.util.ArrayList;
  */
 
 public class SubMenuDiseaseListActivity extends AppCompatActivity{
+
     private ArrayList<SubMenu> subMenus = new ArrayList<>();
     private ArrayList<SubSubMenu> subSubMenus=new ArrayList<>();
-
+    private ArrayList<SubMenu> searchedDisease = new ArrayList<>();
+    private String searchString;
     private GridView gridView;
     private String menuId;
     private String subMenuId;
@@ -40,9 +48,75 @@ public class SubMenuDiseaseListActivity extends AppCompatActivity{
         setContentView(R.layout.activity_sub_menu_diseaselist);
         menuId = getIntent().getStringExtra("menuId");
         loadDataInBackground();
-        ShowList();
-        ShowDataOnItemClick();
+        ShowList(subMenus);
+        ShowDataOnItemClick(subMenus);
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        // Retrieve the SearchView and plug it into SearchManager
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        ImageView closeButton = (ImageView)searchView.findViewById(R.id.search_close_btn);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextChange(String newText){
+//                searchString = newText;
+//                searchView();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query){
+                searchString =query;
+                searchView();
+                return true;
+            }
+        });
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                //Clear query
+                searchView.setQuery("", false);
+                //Collapse the action view
+                searchView.onActionViewCollapsed();
+                //Collapse the search widget
+
+                ShowList(subMenus);
+
+            }
+        });
+        return true;
+    }
+
+    private void searchView(){
+
+        for(int index=0;index<subMenus.size();index++){
+            if(subMenus.get(index).getSubMenuName().contains(searchString)){
+                searchedDisease.add(subMenus.get(index));
+            }
+            else{
+                Toast.makeText(this,"Not Available",Toast.LENGTH_LONG).show();
+            }
+        }
+
+        ShowList(searchedDisease);
+        ShowDataOnItemClick(searchedDisease);
+
+
+
+    }
+
+
+
+
 
     private void loadDataInBackground() {
 
@@ -54,18 +128,18 @@ public class SubMenuDiseaseListActivity extends AppCompatActivity{
             e.printStackTrace();
         }    }
 
-    private void ShowList(){
+    private void ShowList(ArrayList<SubMenu> subMenus){
         mListView = (ListView)findViewById(R.id.tvList);
         mListView.setAdapter(new ListAdapterDiseaseList(this,subMenus));
     }
 
 
-    private void ShowDataOnItemClick(){
+    private void ShowDataOnItemClick(final ArrayList<SubMenu> subMenus){
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                fetchNextMenuData(position);
+                fetchNextMenuData(position,subMenus);
                 if (!subSubMenus.isEmpty()){
 
                     symptomSubSubMenuId=getSymtomSubSubMenuId();
@@ -96,7 +170,7 @@ public class SubMenuDiseaseListActivity extends AppCompatActivity{
        return null;
     }
 
-    private String getSubMenuIdFromRequestedItem(int position){
+    private String getSubMenuIdFromRequestedItem(int position,ArrayList<SubMenu> subMenus){
         return subMenus.get(position).getSubMenuId();
     }
 
@@ -109,8 +183,8 @@ public class SubMenuDiseaseListActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
- private void fetchNextMenuData(int position){
-     subMenuId = getSubMenuIdFromRequestedItem(position);
+ private void fetchNextMenuData(int position,ArrayList<SubMenu> subMenus){
+     subMenuId = getSubMenuIdFromRequestedItem(position,subMenus);
      RequestSubSubMenu requestSubSubMenu = new RequestSubSubMenu(SubMenuDiseaseListActivity.this, menuId, subMenuId);
      requestSubSubMenu.execute();
      subSubMenus = requestSubSubMenu.getSubSubMenus();

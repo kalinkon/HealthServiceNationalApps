@@ -1,5 +1,6 @@
 package com.mcc.healthservicefinal.network;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -27,9 +28,11 @@ public abstract class BaseNetwork extends AsyncTask<Void,Void,String> {
     private String requestMethod;
     private Context mContext;
     private HashMap<String, String> requestParams;
+    private ProgressDialog dialog ;
 
     public BaseNetwork(Context context){
         this.mContext = context;
+        dialog= new ProgressDialog(context);
     }
     public void setRequestParams(HashMap<String, String> requestParams) {
         this.requestParams = requestParams;
@@ -82,6 +85,11 @@ public abstract class BaseNetwork extends AsyncTask<Void,Void,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        dialog.setMessage("Loading...");
+        dialog.setIndeterminate(false);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setCancelable(true);
+        dialog.show();
 
     }
 
@@ -108,7 +116,11 @@ public abstract class BaseNetwork extends AsyncTask<Void,Void,String> {
 
     @Override
     protected void onPostExecute(String response) {
+
         super.onPostExecute(response);
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
 
     }
 
