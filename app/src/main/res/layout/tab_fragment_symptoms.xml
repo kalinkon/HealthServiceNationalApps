@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/lokkhon">
 
-        <LinearLayout
+        <RelativeLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -15,25 +15,26 @@
             app:layout_scrollFlags="scroll">
         <ImageView
             android:id="@+id/activityImage"
-            android:layout_width="234dp"
-            android:layout_height="200dp"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
 
-            android:layout_gravity="center"
-            >"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">"
         </ImageView>
 
         <TextView
             android:id="@+id/textView"
-            android:text="@string/tab_2"
+            android:layout_below="@+id/activityImage"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
 
             android:layout_width="wrap_content"
 
             android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
 </ScrollView>

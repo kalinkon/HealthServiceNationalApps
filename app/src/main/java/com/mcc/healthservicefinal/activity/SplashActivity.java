@@ -1,5 +1,6 @@
 package com.mcc.healthservicefinal.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,12 +11,18 @@ import com.mcc.healthservicefinal.network.NetworkConnection;
 public class SplashActivity extends AppCompatActivity {
 
     private Thread mSplashThread;
+    private ProgressDialog dialog ;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        prepareLoadingDialog();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+
+
 
 //        getSupportActionBar().hide();//hides the action bar
         //setTheme(R.style.AppTheme.);
@@ -38,17 +45,31 @@ public class SplashActivity extends AppCompatActivity {
 
 
                 }
-                finish();
 
                 Intent intent = new Intent(SplashActivity.this, MainMenuActivity.class);
                 startActivity(intent);
+                finish();
+
+
 
             }
 
         };
         mSplashThread.start();
+        dialog.show();
+
+        dialog.dismiss();
+
+//        dialog.show();
     }
 
+    private void prepareLoadingDialog() {
+        dialog= new ProgressDialog(this);dialog.setMessage("Loading...");
+        dialog.setIndeterminate(false);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setCancelable(true);
+
+    }
 
 
 }

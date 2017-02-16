@@ -5,6 +5,8 @@ package com.mcc.healthservicefinal.activity.tabFragment;
  */
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,13 +17,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mcc.healthservicefinal.R;
+import com.mcc.healthservicefinal.activity.ImageViewActivity;
 import com.mcc.healthservicefinal.objects.Content;
 
 import java.util.ArrayList;
 
 public class TabFragmentPrevention extends Fragment {
     private ArrayList<Content> preventions=null;
-     private Context mContext;
+    private Context mContext;
 
     public void setPreventions(ArrayList<Content> preventions, Context mContext){
         this.preventions=preventions;
@@ -38,7 +41,23 @@ public class TabFragmentPrevention extends Fragment {
         Glide.with(mContext)
                 .load(preventions.get(0).getImg())
                 .into(imageView);
+        final String mImage = preventions.get(0).getImg();
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), ImageViewActivity.class);
+                intent.putExtra("image",mImage);
+                startActivity(intent);
+
+            }
+        });
+
+
         return view;
+
+
     }
 
 }

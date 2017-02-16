@@ -44,28 +44,41 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        View grid;
+        MyHolder holder;
+        View grid=convertView;
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (convertView == null) {
+        if (grid == null) {
 
             grid = new View(mContext);
-            grid = inflater.inflate(R.layout.content_grid_view, null);
+            grid = inflater.inflate(R.layout.content_grid_view,null);
 
-            TextView textView = (TextView) grid.findViewById(R.id.grid_text);
-            textView.setText(menus.get(position).getName().toString());
-
-            ImageView imageView = (ImageView) grid.findViewById(R.id.grid_image);
-            Glide.with(mContext)
-                    .load(menus.get(position).getImage())
-                    .into(imageView);
+            holder=new MyHolder(grid);
+            grid.setTag(holder);
 
         }
         else {
-            grid = (View) convertView;
+            holder=(MyHolder)grid.getTag();
         }
+
+        holder.keyword.setText(menus.get(position).getName());
+        Glide.with(mContext)
+                .load(menus.get(position).getImage())
+                .into(holder.mImage);
+
+
         return grid;
+    }
+
+    public class MyHolder {
+        TextView keyword;
+        ImageView mImage;
+
+        public MyHolder(View v) {
+            keyword = (TextView) v.findViewById(R.id.grid_text);
+            mImage = (ImageView)v.findViewById(R.id.grid_image);
+        }
+
     }
 
 }

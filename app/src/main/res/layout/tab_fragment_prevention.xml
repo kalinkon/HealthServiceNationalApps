@@ -4,36 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/protikar">
-    <LinearLayout
+    <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:orientation="vertical"
-        app:layout_scrollFlags="scroll"
-        android:weightSum="1">
-
-
+        app:layout_scrollFlags="scroll">
         <ImageView
             android:id="@+id/activityImage"
-            android:layout_width="234dp"
-            android:layout_height="200dp"
-            android:scaleType="fitCenter"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
 
-            android:layout_gravity="center"
-            android:layout_weight="0.83">"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">"
         </ImageView>
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:text="@string/tab_1"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:layout_below="@+id/activityImage"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
 
-    </LinearLayout>
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
 </ScrollView>

@@ -33,6 +33,7 @@
         </activity>
         <activity android:name=".activity.ContentDiseaseActivity"
             android:theme="@style/AppThemeDiseaseContent"></activity>
+        <activity android:name=".activity.ImageViewActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

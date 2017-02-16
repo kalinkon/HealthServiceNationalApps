@@ -1,4 +1,5 @@
 package com.mcc.healthservicefinal.activity;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +10,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,17 +44,32 @@ public class SubMenuDiseaseListActivity extends AppCompatActivity{
     private ListView mListView;
     private String symptomSubSubMenuId;
     private String preventionsSubSubMenuId;
+
+    private ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        prepareLoadingDialog();
         super.onCreate(savedInstanceState);
+
+
 
         setContentView(R.layout.activity_sub_menu_diseaselist);
         menuId = getIntent().getStringExtra("menuId");
-        loadDataInBackground();
-        ShowList(subMenus);
-        ShowDataOnItemClick(subMenus);
+
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadDataInBackground();
+
+        ShowList(subMenus);
+
+        if(dialog.isShowing()){
+            dialog.dismiss();
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,15 +83,13 @@ public class SubMenuDiseaseListActivity extends AppCompatActivity{
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextChange(String newText){
-//                searchString = newText;
-//                searchView();
+                searchView(newText);
                 return true;
             }
 
             @Override
             public boolean onQueryTextSubmit(String query){
-                searchString =query;
-                searchView();
+                searchView(query);
                 return true;
             }
         });
@@ -96,21 +112,22 @@ public class SubMenuDiseaseListActivity extends AppCompatActivity{
         return true;
     }
 
-    private void searchView(){
+    private void searchView(String searchString){
+
+        if(!searchedDisease.isEmpty()){
+            searchedDisease.clear();
+        }
 
         for(int index=0;index<subMenus.size();index++){
             if(subMenus.get(index).getSubMenuName().contains(searchString)){
                 searchedDisease.add(subMenus.get(index));
             }
             else{
-                Toast.makeText(this,"Not Available",Toast.LENGTH_LONG).show();
+//                Toast.makeText(this,"Not Available",Toast.LENGTH_LONG).show();
             }
         }
 
         ShowList(searchedDisease);
-        ShowDataOnItemClick(searchedDisease);
-
-
 
     }
 
@@ -130,7 +147,13 @@ public class SubMenuDiseaseListActivity extends AppCompatActivity{
 
     private void ShowList(ArrayList<SubMenu> subMenus){
         mListView = (ListView)findViewById(R.id.tvList);
-        mListView.setAdapter(new ListAdapterDiseaseList(this,subMenus));
+        ListAdapterDiseaseList adapter = new ListAdapterDiseaseList(this,subMenus);
+        adapter.notifyDataSetChanged();
+        mListView.setAdapter(adapter);
+
+        ShowDataOnItemClick(subMenus);
+
+
     }
 
 
@@ -139,12 +162,14 @@ public class SubMenuDiseaseListActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
+                dialog.show();
                 fetchNextMenuData(position,subMenus);
                 if (!subSubMenus.isEmpty()){
 
                     symptomSubSubMenuId=getSymtomSubSubMenuId();
                     preventionsSubSubMenuId=getPreventionsSubSubMenuId();
                     callNextIntentWithParameters();
+
                 }
             }
         });
@@ -189,5 +214,10 @@ public class SubMenuDiseaseListActivity extends AppCompatActivity{
      requestSubSubMenu.execute();
      subSubMenus = requestSubSubMenu.getSubSubMenus();
  }
+    private void prepareLoadingDialog() {
+        dialog= new ProgressDialog(this);dialog.setMessage("Loading...");
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+    }
 
 }

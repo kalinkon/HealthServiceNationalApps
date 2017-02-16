@@ -13,4 +13,5 @@
 
     <color name="colorPrimaryContent">#747171</color>
     <color name="colorPrimaryDarkContent">#3e2626</color>
+    <color name="black">#FF030303</color>
 </resources>

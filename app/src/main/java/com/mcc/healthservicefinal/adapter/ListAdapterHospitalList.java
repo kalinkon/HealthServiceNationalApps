@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.mcc.healthservicefinal.R;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
  * Created by LINKON on 1/29/2017.
  */
 
-public class ListAdapterHospitalList extends BaseAdapter{
+public class ListAdapterHospitalList extends BaseAdapter implements Filterable{
     private ArrayList<Content> hospitals = new ArrayList<>();
     private Context mContext;
 
@@ -55,6 +57,11 @@ public class ListAdapterHospitalList extends BaseAdapter{
         }
         holder.keyword.setText(hospitals.get(position).getDetails());
         return row;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
     }
 
     public class MyHolder {

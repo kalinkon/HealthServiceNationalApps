@@ -1,5 +1,6 @@
 package com.mcc.healthservicefinal.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private ArrayList<MainMenu> menus = new ArrayList<>();
     private ArrayList<SubMenu> subMenus = new ArrayList<>();
+    private ProgressDialog dialog ;
 
     private GridView gridView;
     private NetworkConnection networkConnection;
@@ -33,8 +35,14 @@ public class MainMenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        prepareLoadingDialog();
+//        dialog.show();
+
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main_menu);
+
 
 
 
@@ -45,6 +53,7 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onStart();
         networkConnection = new NetworkConnection(this);
         connectionInformation();
+        dialog.dismiss();
 
     }
 
@@ -88,6 +97,8 @@ public class MainMenuActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                dialog.show();
                 fetchNextMenuData(position);
 
                 if(subMenus.isEmpty()){
@@ -104,12 +115,20 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent intent = new Intent(MainMenuActivity.this, HospitalListActivity.class);
         intent.putExtra("menuId", menuId);
         startActivity(intent);
+
+
     }
 
     private void callDiseaseListWithParameters(){
         Intent intent =new Intent(MainMenuActivity.this,SubMenuDiseaseListActivity.class);
         intent.putExtra("menuId",menuId);
+
         startActivity(intent);
+
+
+
+
+
     }
 
     private void fetchNextMenuData(int position){
@@ -121,6 +140,13 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
     private String getDataFromRequestedMenu(int position) {
-        return menus.get(position).getMenuId().toString();
+        return menus.get(position).getMenuId();
+    }
+    private void prepareLoadingDialog() {
+        dialog= new ProgressDialog(this);dialog.setMessage("Loading...");
+        dialog.setIndeterminate(false);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setCancelable(true);
+
     }
 }

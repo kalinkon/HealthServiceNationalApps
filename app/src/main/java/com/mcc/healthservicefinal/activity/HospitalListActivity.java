@@ -7,6 +7,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ public class HospitalListActivity extends AppCompatActivity {
     private ArrayList<Content> searchedHospitals=new ArrayList<>();
     private ListView mListView;
     private HospitalInfoModel mHospital;
-    private String searchString;
+
 
 
 
@@ -41,7 +42,10 @@ public class HospitalListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hospital_list_activity);
-
+        if(savedInstanceState==null){
+            mListView = (ListView) findViewById(R.id.lvContent);
+        }
+//        mListView.setTextFilterEnabled(true);
         receiveParameters();
         loadDataInBackground();
         doOperations();
@@ -60,15 +64,13 @@ public class HospitalListActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextChange(String newText){
-//                searchString =newText;
-//                searchView();
+                searchView(newText);
                 return true;
             }
 
             @Override
             public boolean onQueryTextSubmit(String query){
-                searchString =query;
-                searchView();
+                searchView(query);
                 return true;
             }
         });
@@ -91,14 +93,17 @@ public class HospitalListActivity extends AppCompatActivity {
         return true;
     }
 
-    private void searchView(){
+    private void searchView(String searchString){
+        if(!searchedHospitals.isEmpty()){
+            searchedHospitals.clear();
+        }
 
         for(int index=0;index<hospitals.size();index++){
             if(hospitals.get(index).getDetails().contains(searchString)){
                 searchedHospitals.add(hospitals.get(index));
             }
             else{
-                Toast.makeText(this,"Not Available",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this,"Not Available",Toast.LENGTH_SHORT).show();
             }
         }
         ShowContents(searchedHospitals);
@@ -120,8 +125,12 @@ public class HospitalListActivity extends AppCompatActivity {
     }
 
     private void ShowContents(ArrayList<Content> hospitals) {
-        mListView = (ListView) findViewById(R.id.lvContent);
-        mListView.setAdapter(new ListAdapterHospitalList(this, hospitals));
+
+        ListAdapterHospitalList adapter =new ListAdapterHospitalList(this, hospitals);
+
+         mListView.setAdapter(adapter);
+        ((BaseAdapter)mListView.getAdapter()).notifyDataSetChanged();
+
     }
 
     private void loadDataInBackground() {
