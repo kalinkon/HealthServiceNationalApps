@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.mcc.healthservicefinal.R;
 
+import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
@@ -34,16 +35,14 @@ public class ImageViewActivity extends AppCompatActivity {
         setContentView(R.layout.image_viewer);
 
 
-        ImageView imageView =(ImageView)findViewById(R.id.imageView);
+        PhotoView imageView =(PhotoView) findViewById(R.id.imageView);
         Glide.with(this).load(mImage).into(imageView);
 
 
-//        PhotoViewAttacher picView = new PhotoViewAttacher(imageView);
-//
-//        picView.update();
+        PhotoViewAttacher picView = new PhotoViewAttacher(imageView);
 
-        Animation zoomAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom);
-        imageView.startAnimation(zoomAnimation);
+        picView.update();
+
     }
 
 
